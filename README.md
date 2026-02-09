@@ -1,115 +1,141 @@
-# Decap CMS for Dagsaktuellt
+# Dagsaktuellt - Nordic News Platform
 
-This directory contains the Decap CMS (Netlify CMS) configuration for managing articles.
+A modern, bilingual news platform built with Next.js 15 and Sanity CMS, featuring a sophisticated design inspired by Nordic journalism.
 
-## Files
+## 🌟 Features
 
-- **index.html** - CMS admin interface with Dagsaktuellt branding
-- **config.yml** - CMS configuration (collections, fields, workflow)
-- **preview.js** - Custom preview templates for article rendering
-- **preview-styles.css** - Styles for the CMS preview pane
+- **Multilingual Support**: Swedish and English language toggle
+- **Dark/Light Mode**: System preference detection with manual toggle
+- **Sanity CMS Integration**: Headless CMS for content management
+- **Dynamic Articles**: Full blog/article system with categories and authors
+- **Responsive Design**: Mobile-first approach with beautiful layouts
+- **SEO Optimized**: Meta tags, semantic HTML, and structured data
+- **Built-in Studio**: Sanity Studio integrated at `/studio` route
 
-## Accessing the CMS
+## 🚀 Tech Stack
 
-### Local Development
-Visit `http://localhost:3000/admin/` when running the dev server.
+- **Framework**: Next.js 15 (App Router)
+- **CMS**: Sanity.io
+- **Styling**: CSS Modules
+- **Language**: TypeScript
+- **Fonts**: Merriweather (Google Fonts)
+- **Deployment**: Netlify
 
-**Note:** Full authentication requires Netlify Identity, so you'll need to deploy first or use a proxy.
+## 📦 Installation
 
-### Production
-Access the CMS at: `https://dagsaktuellt.netlify.app/admin/`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/koenbrkrs/dagsaktuellt.git
+   cd dagsaktuellt
+   ```
 
-## Setup Instructions
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-1. **Enable Netlify Identity**
-   - Go to your Netlify dashboard
-   - Navigate to Site settings → Identity
-   - Click "Enable Identity"
+3. Set up environment variables:
+   - Copy `.env.example` to `.env.local`
+   - Update with your Sanity project credentials:
+   ```
+   NEXT_PUBLIC_SANITY_PROJECT_ID="your-project-id"
+   NEXT_PUBLIC_SANITY_DATASET="production"
+   ```
 
-2. **Enable Git Gateway**
-   - In Identity settings, click "Services"
-   - Enable "Git Gateway"
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-3. **Invite Users**
-   - Go to Identity tab
-   - Click "Invite users"
-   - Enter email addresses for content editors
-   - They'll receive an email to set up their account
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-4. **First Login**
-   - Visit `/admin/` on your deployed site
-   - Click "Login with Netlify Identity"
-   - Set your password from the invitation email
+## 🎨 Content Management
 
-## Content Structure
+Access the Sanity Studio at [http://localhost:3000/studio](http://localhost:3000/studio) to:
+- Create and manage articles
+- Add authors with profiles
+- Organize content into categories
+- Edit the about page
 
-Articles are saved to `content/articles/` as markdown files with this structure:
+## 🌐 Deployment
 
-```markdown
----
-title: "Article Title"
-date: 2026-02-09T12:00:00Z
-author: "Author Name"
-category: "News"
-featured_image: "/images/uploads/hero.jpg"
-blocks:
-  - type: text
-    content: "Article content..."
-  - type: graphic
-    image: "/images/uploads/image.jpg"
-    caption: "Image description"
-    alt: "Alt text for accessibility"
-tags:
-  - tag1
-  - tag2
-featured: false
-excerpt: "Brief summary"
----
+### Netlify
+
+1. Push your code to GitHub
+2. Connect your repository to Netlify
+3. Configure environment variables in Netlify:
+   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
+   - `NEXT_PUBLIC_SANITY_DATASET`
+4. Deploy!
+
+The `netlify.toml` file is pre-configured with:
+- Static export build command
+- Output directory set to `out`
+- Environment variables template
+
+## 📁 Project Structure
+
+```
+├── public/              # Static assets
+├── src/
+│   ├── app/            # Next.js app directory
+│   │   ├── about/      # About page
+│   │   ├── articles/   # Articles listing & detail pages
+│   │   ├── studio/     # Sanity Studio route
+│   │   └── page.tsx    # Homepage
+│   ├── components/     # React components
+│   ├── sanity/         # Sanity configuration & schemas
+│   ├── lib/            # Utility functions
+│   └── types/          # TypeScript definitions
+├── netlify.toml        # Netlify configuration
+└── sanity.config.ts    # Sanity Studio configuration
 ```
 
-## Editorial Workflow
+## 🎯 Key Features Explained
 
-The CMS supports three content states:
+### Article System
+- Full CRUD operations via Sanity Studio
+- Category filtering and search
+- Author profiles with images
+- Rich text content with Portable Text
+- Featured images with captions
+- Publication dates and metadata
 
-1. **Drafts** - Work in progress, not published
-2. **In Review** - Ready for editorial review
-3. **Ready** - Approved and ready to publish
+### Internationalization
+- Toggle between Swedish (sv) and English (en)
+- Persisted language preference in localStorage
+- Translated UI elements throughout
 
-Content moves through these states before being merged to the main branch.
+### Theme System
+- Auto-detects system preference
+- Manual dark/light mode toggle
+- Smooth transitions between themes
+- Persisted theme preference
 
-## Modular Content Blocks
+## 🛠️ Development
 
-Articles use a flexible block system:
+```bash
+# Development server
+npm run dev
 
-### Text Block
-- Rich markdown editor
-- Supports: headings, bold, italic, links, lists, quotes
-- Toggle between rich text and raw markdown modes
+# Build for production
+npm run build
 
-### Graphic Block
-- Image upload
-- Caption field (displays in small, italic, gray text)
-- Alt text for accessibility
+# Start production server
+npm start
 
-Build articles by mixing these blocks in any order!
+# Lint code
+npm run lint
+```
 
-## Customization
+## 📝 License
 
-### Branding
-- Logo: Update `logo_url` in `config.yml`
-- Theme: Modify styles in `index.html` (CSS variables)
-- Preview: Edit `preview-styles.css` for article preview appearance
+This project is private and proprietary.
 
-### Categories
-Current categories: News, Sports, Culture, Opinion
+## 👥 Author
 
-To modify, edit the `category` field in `config.yml`.
+**Koen Berkers**
 
-### Fields
-Add custom fields by editing the `fields` array in `config.yml` under the articles collection.
+---
 
-## Support
-
-For issues or questions about Decap CMS:
-- [Decap CMS Documentation](https://decapcms.org/docs/)
-- [Netlify Identity Docs](https://docs.netlify.com/visitor-access/identity/)
+Built with ❤️ using Next.js and Sanity
