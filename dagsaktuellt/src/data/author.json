@@ -1,0 +1,16 @@
+{
+    "name": "Julius Jönson",
+    "title": {
+        "sv": "Chefredaktör/Reporter",
+        "en": "Editor-in-Chief/Reporter"
+    },
+    "bio": {
+        "sv": "Julius Jönson är grundare och chefredaktör för Dagsaktuellt. Han är specialist på svensk politik, demografi och samhällsutveckling. Hans analyser har publicerats i flera ledande nordiska medier.",
+        "en": "Julius Jönson is the founder and editor-in-chief of Dagsaktuellt. He specializes in Swedish politics, demography, and societal development. His analyses have been published in several leading Nordic media outlets."
+    },
+    "email": "julius@dagsaktuellt.se",
+    "social": {
+        "twitter": "https://twitter.com/juliusjonson",
+        "linkedin": "https://linkedin.com/in/juliusjonson"
+    }
+}

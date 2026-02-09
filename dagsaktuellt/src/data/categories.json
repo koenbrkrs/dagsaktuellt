@@ -1,0 +1,37 @@
+[
+    {
+        "id": "current-affairs",
+        "name": {
+            "sv": "Aktuella Frågor",
+            "en": "Current Affairs"
+        }
+    },
+    {
+        "id": "sweden",
+        "name": {
+            "sv": "Sverige",
+            "en": "Sweden"
+        }
+    },
+    {
+        "id": "demography",
+        "name": {
+            "sv": "Demografi",
+            "en": "Demography"
+        }
+    },
+    {
+        "id": "public-transport",
+        "name": {
+            "sv": "Kollektivtrafik",
+            "en": "Public Transport"
+        }
+    },
+    {
+        "id": "editorial",
+        "name": {
+            "sv": "Redaktion",
+            "en": "Editorial Team"
+        }
+    }
+]

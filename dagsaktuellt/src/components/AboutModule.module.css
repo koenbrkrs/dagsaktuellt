@@ -1,0 +1,159 @@
+.module {
+    background-color: #1a1a1a;
+    border: none;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+[data-theme="light"] .module {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+}
+
+.authorImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #444444;
+    margin: 0 auto 20px;
+}
+
+[data-theme="light"] .authorImage {
+    background-color: #ddd;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+[data-theme="light"] .title {
+    color: #1a1a1a;
+}
+
+.role {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+[data-theme="light"] .role {
+    color: #666666;
+}
+
+.followText {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 10px;
+}
+
+[data-theme="light"] .followText {
+    color: #666666;
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.socialIcon {
+    width: 30px;
+    height: 30px;
+    background-color: #333333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.socialIcon:hover {
+    background-color: #444444;
+}
+
+[data-theme="light"] .socialIcon {
+    background-color: #e0e0e0;
+}
+
+[data-theme="light"] .socialIcon:hover {
+    background-color: #d0d0d0;
+}
+
+.categoriesList {
+    text-align: left;
+    margin-top: 30px;
+}
+
+.categoriesList h4 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+[data-theme="light"] .categoriesList h4 {
+    color: #1a1a1a;
+}
+
+.categoriesList ul {
+    list-style: none;
+}
+
+.categoriesList li {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.categoriesList li:hover {
+    color: var(--color-accent);
+}
+
+[data-theme="light"] .categoriesList li {
+    color: #666666;
+}
+
+.email {
+    margin-top: 30px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="light"] .email {
+    color: #666666;
+}
+
+.email a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.email a:hover {
+    text-decoration: underline;
+}
+
+.bio {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.socialLink {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+}
+
+.socialLink:hover {
+    color: var(--color-accent);
+}

@@ -1,0 +1,154 @@
+[
+    {
+        "id": "1",
+        "title": {
+            "sv": "Den demografiska övergången i Turkiet",
+            "en": "The demographic transition in Turkey"
+        },
+        "excerpt": {
+            "sv": "Turkiet genomgår en dramatisk demografisk förändring som kommer att forma landets framtid i decennier framöver. Fertilitetstalen sjunker samtidigt som befolkningen åldras.",
+            "en": "Turkey is undergoing a dramatic demographic transition that will shape the country's future for decades to come. Fertility rates are declining while the population ages."
+        },
+        "content": {
+            "sv": "Turkiet står inför en demografisk vändpunkt. Efter decennier av snabb befolkningstillväxt har landets fertilitet nu sjunkit till under ersättningsnivån. Detta kommer att ha djupgripande konsekvenser för landets ekonomi, arbetskraft och sociala trygghetssystem.",
+            "en": "Turkey is facing a demographic turning point. After decades of rapid population growth, the country's fertility has now fallen below replacement level. This will have profound consequences for the country's economy, workforce, and social security systems."
+        },
+        "category": "demography",
+        "author": "Julius Jönson",
+        "publishDate": "2026-01-28",
+        "featured": true
+    },
+    {
+        "id": "2",
+        "title": {
+            "sv": "Stockholms nya tunnelbanelinje: En analys",
+            "en": "Stockholm's new metro line: An analysis"
+        },
+        "excerpt": {
+            "sv": "Den nya gröna linjen förväntas revolut ionera kollektivtrafiken i Stockholm. Men kritiker varnar för kostnadsöverskridanden och förseningar.",
+            "en": "The new green line is expected to revolutionize public transport in Stockholm. But critics warn of cost overruns and delays."
+        },
+        "content": {
+            "sv": "Stockholms nya tunnelbanelinje representerar den största infrastruktursatsningen i Sveriges huvudstad på decennier. Projektet syftar till att förbättra tillgängligheten och minska trängseln i stadens centrala delar.",
+            "en": "Stockholm's new metro line represents the largest infrastructure investment in Sweden's capital in decades. The project aims to improve accessibility and reduce congestion in the city's central parts."
+        },
+        "category": "public-transport",
+        "author": "Julius Jönson",
+        "publishDate": "2026-01-27",
+        "featured": false
+    },
+    {
+        "id": "3",
+        "title": {
+            "sv": "Sveriges åldrande befolkning: Utmaningar och möjligheter",
+            "en": "Sweden's aging population: Challenges and opportunities"
+        },
+        "excerpt": {
+            "sv": "Andelen äldre i Sverige växer snabbt. Detta ställer nya krav på välfärdssystemet men skapar också nya ekonomiska möjligheter.",
+            "en": "The proportion of elderly in Sweden is growing rapidly. This places new demands on the welfare system but also creates new economic opportunities."
+        },
+        "content": {
+            "sv": "Sveriges befolkning blir allt äldre. För första gången i historien är andelen personer över 65 år större än andelen under 20 år. Detta kräver omfattande reformer av våra välfärdssystem.",
+            "en": "Sweden's population is aging. For the first time in history, the proportion of people over 65 is larger than those under 20. This requires comprehensive reforms of our welfare systems."
+        },
+        "category": "demography",
+        "author": "Julius Jönson",
+        "publishDate": "2026-01-25",
+        "featured": false
+    },
+    {
+        "id": "4",
+        "title": {
+            "sv": "Klimatpolitikens framtid efter Parisavtalet",
+            "en": "The future of climate policy after the Paris Agreement"
+        },
+        "excerpt": {
+            "sv": "När Parisavtalet firas för sitt tionde år står världen vid ett vägskäl. Har vi gjort tillräckligt för att nå våra klimatmål?",
+            "en": "As the Paris Agreement celebrates its tenth year, the world stands at a crossroads. Have we done enough to meet our climate goals?"
+        },
+        "content": {
+            "sv": "Tio år efter Parisavtalet står det klart att världens nationer har olika långt kvar till sina klimatmål. Sverige ligger relativt väl till, men globalt behövs kraftfullare åtgärder.",
+            "en": "Ten years after the Paris Agreement, it is clear that the world's nations have varying distances to their climate goals. Sweden is relatively well-positioned, but globally, more forceful measures are needed."
+        },
+        "category": "current-affairs",
+        "author": "Julius Jönson",
+        "publishDate": "2026-01-24",
+        "featured": false
+    },
+    {
+        "id": "5",
+        "title": {
+            "sv": "Kollektivtrafikens roll i den gröna omställningen",
+            "en": "The role of public transport in the green transition"
+        },
+        "excerpt": {
+            "sv": "För att nå klimatmålen måste fler välja kollektivtrafik. Men vad krävs för att få svenskarna att lämna bilen hemma?",
+            "en": "To reach climate goals, more people must choose public transport. But what does it take to get Swedes to leave their cars at home?"
+        },
+        "content": {
+            "sv": "Kollektivtrafiken är central i arbetet med att minska utsläppen från transportsektorn. Men trots stora satsningar kämpar många regioner med att öka antalet resenärer.",
+            "en": "Public transport is central to reducing emissions from the transport sector. But despite major investments, many regions struggle to increase the number of passengers."
+        },
+        "category": "public-transport",
+        "author": "Julius Jönson",
+        "publishDate": "2026-01-22",
+        "featured": false
+    },
+    {
+        "id": "6",
+        "title": {
+            "sv": "Den svenska jordbrukspolitikens framtid",
+            "en": "The future of Swedish agricultural policy"
+        },
+        "excerpt": {
+            "sv": "Sveriges jordbruk står inför stora utmaningar. Klimatförändringar och EU-direktiv kräver omfattande omställning av sektorn.",
+            "en": "Swedish agriculture faces major challenges. Climate change and EU directives require comprehensive transformation of the sector."
+        },
+        "content": {
+            "sv": "Den svenska jordbrukssektorn befinner sig i en brytningstid. Nya EU-regler, klimatförändringar och ändrade konsumentpreferenser tvingar fram en omställning.",
+            "en": "The Swedish agricultural sector is in a period of transition. New EU rules, climate change, and changing consumer preferences are forcing transformation."
+        },
+        "category": "sweden",
+        "author": "Julius Jönson",
+        "publishDate": "2026-01-20",
+        "featured": false
+    },
+    {
+        "id": "7",
+        "title": {
+            "sv": "Bostadsbristen: En kris utan slut?",
+            "en": "The housing shortage: A crisis without end?"
+        },
+        "excerpt": {
+            "sv": "Trots löften om ökad bostadsbyggnation fortsätter bostadsbristen att växa i Sveriges storstäder. Vad har gått fel?",
+            "en": "Despite promises of increased housing construction, the housing shortage continues to grow in Sweden's major cities. What went wrong?"
+        },
+        "content": {
+            "sv": "Bostadsbristen är en av Sveriges största samhällsutmaningar. Särskilt i storstadsregionerna råder akut brist på tillgängliga bostäder till rimliga priser.",
+            "en": "The housing shortage is one of Sweden's biggest societal challenges. Especially in metropolitan regions, there is an acute shortage of available housing at reasonable prices."
+        },
+        "category": "sweden",
+        "author": "Julius Jönson",
+        "publishDate": "2026-01-18",
+        "featured": false
+    },
+    {
+        "id": "8",
+        "title": {
+            "sv": "Redaktionens syn på dagens medielandskap",
+            "en": "The editorial team's view on today's media landscape"
+        },
+        "excerpt": {
+            "sv": "I en tid av misinformation och clickbait är seriös journalistik viktigare än någonsin. Här förklarar vi vår redaktionella linje.",
+            "en": "In an age of misinformation and clickbait, serious journalism is more important than ever. Here we explain our editorial line."
+        },
+        "content": {
+            "sv": "Dagsaktuellt grundades med ambitionen att erbjuda djupgående, faktabaserad journalistik av högsta kvalitet. Vi tror på grundlig research och balanserad rapportering.",
+            "en": "Dagsaktuellt was founded with the ambition to offer in-depth, fact-based journalism of the highest quality. We believe in thorough research and balanced reporting."
+        },
+        "category": "editorial",
+        "author": "Julius Jönson",
+        "publishDate": "2026-01-15",
+        "featured": false
+    }
+]
