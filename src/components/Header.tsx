@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
+import { FiSearch, FiSun, FiMoon } from 'react-icons/fi';
 import styles from './Header.module.css';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -12,6 +14,21 @@ export default function Header() {
     const { theme, toggleTheme } = useTheme();
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    // Detect scroll for header effect
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,18 +40,25 @@ export default function Header() {
     };
 
     return (
-        <header className={styles.header}>
+        <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
             <div className={`container ${styles.headerContainer}`}>
                 {/* Logo/Masthead */}
                 <Link href="/" className={styles.masthead}>
-                    <h1 className="text-serif">Dagsaktuellt</h1>
+                    <Image
+                        src="/logo-white.png"
+                        alt="Dagsaktuellt"
+                        width={180}
+                        height={45}
+                        priority
+                        className={styles.logo}
+                    />
                 </Link>
 
                 {/* Navigation */}
                 <nav className={styles.nav}>
                     <Link href="/articles">{t('allArticles')}</Link>
                     <Link href="/about">{t('about')}</Link>
-                    <Link href="#recent">{t('recent')}</Link>
+                    <Link href="/articles">{t('recent')}</Link>
                 </nav>
 
                 {/* Search and Toggles */}
@@ -53,7 +77,7 @@ export default function Header() {
                             className={styles.toggleButton}
                             aria-label="Search"
                         >
-                            <span className={styles.icon}>🔍</span>
+                            <FiSearch />
                         </button>
                     </form>
 
@@ -74,7 +98,7 @@ export default function Header() {
                             className={styles.toggleButton}
                             aria-label="Toggle theme"
                         >
-                            <span className={styles.icon}>{theme === 'light' ? '🌙' : '☀️'}</span>
+                            {theme === 'light' ? <FiMoon /> : <FiSun />}
                         </button>
                     </div>
                 </div>

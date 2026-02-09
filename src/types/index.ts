@@ -31,6 +31,7 @@ export interface Category {
     sv: string;
     en: string;
   };
+  image?: string;
 }
 
 export interface Author {

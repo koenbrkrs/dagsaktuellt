@@ -47,6 +47,25 @@
     justify-content: flex-end;
     cursor: pointer;
     transition: transform var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Add dark overlay for better text readability over images */
+.categoryCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+    z-index: 1;
+}
+
+.categoryCard>* {
+    position: relative;
+    z-index: 2;
 }
 
 .categoryCard:hover {
@@ -62,20 +81,18 @@
     margin-bottom: 10px;
     font-weight: 400;
     color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-[data-theme="light"] .categoryCard h3 {
-    color: #1a1a1a;
-}
+
 
 .categoryCard p {
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-[data-theme="light"] .categoryCard p {
-    color: #666666;
-}
+
 
 /* Carousel Wrapper */
 .carouselWrapper {

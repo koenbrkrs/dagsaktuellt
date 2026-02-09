@@ -1,16 +1,23 @@
 .header {
-    position: sticky;
+    position: fixed;
     top: 0;
-    background-color: #333333;
+    left: 0;
+    right: 0;
+    background-color: transparent;
     z-index: 100;
-    transition: background-color var(--transition-normal);
+    transition: all 0.3s ease;
 }
 
-[data-theme="light"] .header {
+.header.scrolled {
+    background-color: #333333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .header.scrolled {
     background-color: #333333;
 }
 
-[data-theme="dark"] .header {
+[data-theme="dark"] .header.scrolled {
     background-color: #333333;
 }
 
@@ -29,6 +36,12 @@
     margin: 0;
     color: #ffffff;
     letter-spacing: -0.01em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    height: auto;
+    display: block;
 }
 
 .masthead:hover h1 {
@@ -49,6 +62,7 @@
     color: #ffffff;
     transition: color var(--transition-fast);
     position: relative;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .nav a:hover {
@@ -128,15 +142,19 @@
     min-width: 36px;
     height: 36px;
     border-radius: 15px;
-    background-color: #555555;
-    transition: background-color var(--transition-fast);
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all var(--transition-fast);
     cursor: pointer;
     padding: 6px 15px;
     color: #ffffff;
+    font-size: 1.1rem;
 }
 
 .toggleButton:hover {
-    background-color: #666666;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .subscribeButton {

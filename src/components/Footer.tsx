@@ -1,11 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6';
 import styles from './Footer.module.css';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function Footer() {
     const { t } = useLanguage();
+    const { theme } = useTheme();
 
     return (
         <footer className={styles.footer}>
@@ -53,17 +57,33 @@ export default function Footer() {
                 </div>
 
                 <div className={styles.footerBottom}>
-                    <div className={styles.footerLogo}>Dagsaktuellt</div>
+                    <div className={styles.footerLogo}>
+                        <Image
+                            src={theme === 'dark' ? '/logo-white.png' : '/logo-black.png'}
+                            alt="Dagsaktuellt"
+                            width={180}
+                            height={45}
+                            className={styles.footerLogoImage}
+                        />
+                    </div>
                     <div className={styles.footerLinks}>
                         <Link href="/cookies">{t('cookies')}</Link>
                         <Link href="/terms">{t('terms')}</Link>
                         <Link href="/support">{t('support')}</Link>
                     </div>
                     <div className={styles.footerSocial}>
-                        <div className={styles.footerSocialIcon}>📘</div>
-                        <div className={styles.footerSocialIcon}>🐦</div>
-                        <div className={styles.footerSocialIcon}>📷</div>
-                        <div className={styles.footerSocialIcon}>💼</div>
+                        <div className={styles.footerSocialIcon}>
+                            <FaFacebookF />
+                        </div>
+                        <div className={styles.footerSocialIcon}>
+                            <FaInstagram />
+                        </div>
+                        <div className={styles.footerSocialIcon}>
+                            <FaLinkedinIn />
+                        </div>
+                        <div className={styles.footerSocialIcon}>
+                            <FaWhatsapp />
+                        </div>
                     </div>
                 </div>
             </div>

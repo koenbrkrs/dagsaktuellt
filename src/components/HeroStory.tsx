@@ -28,13 +28,20 @@ export default function HeroStory({ articles }: { articles: Article[] }) {
     const article = articles[currentIndex];
 
     return (
-        <article className={styles.hero}>
+        <article
+            className={styles.hero}
+            style={{
+                backgroundImage: article.image ? `url(${article.image})` : 'none',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}
+        >
             <div className={styles.content}>
                 <div className={styles.categories}>
                     <span className={styles.category}>{article.category}</span>
                     <span className={styles.category}>{article.publishDate}</span>
                 </div>
-                <Link href={`/article/${article.id}`}>
+                <Link href={`/articles/${article.id}`}>
                     <h1 className={styles.headline}>{article.title[language]}</h1>
                 </Link>
                 <p className={styles.excerpt}>{article.excerpt[language]}</p>

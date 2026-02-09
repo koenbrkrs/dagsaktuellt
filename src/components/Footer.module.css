@@ -123,6 +123,11 @@
     color: #ffffff;
 }
 
+.footerLogoImage {
+    height: auto;
+    display: block;
+}
+
 [data-theme="light"] .footerLogo {
     color: #1a1a1a;
 }
@@ -157,27 +162,27 @@
 }
 
 .footerSocialIcon {
-    width: 35px;
-    height: 35px;
-    border: 1px solid #444444;
-    border-radius: 50%;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all var(--transition-fast);
+    color: #999999;
+    font-size: 20px;
 }
 
 .footerSocialIcon:hover {
-    border-color: #ffffff;
+    color: #ffffff;
 }
 
 [data-theme="light"] .footerSocialIcon {
-    border-color: #cccccc;
+    color: #666666;
 }
 
 [data-theme="light"] .footerSocialIcon:hover {
-    border-color: #000000;
+    color: #000000;
 }
 
 /* Old classes for backwards compatibility */

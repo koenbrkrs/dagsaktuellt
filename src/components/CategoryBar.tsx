@@ -55,7 +55,12 @@ export default function CategoryBar({ categories, activeCategory, onCategoryChan
                             key={category.id}
                             href={`/articles?category=${category.id}`}
                             className={styles.categoryCard}
-                            style={{ textDecoration: 'none' }}
+                            style={{
+                                textDecoration: 'none',
+                                backgroundImage: category.image ? `url(${category.image})` : 'none',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                            }}
                         >
                             <h3>{category.name[language]}</h3>
                             <p>{category.description?.[language] || 'Things happening in the world right now'}</p>

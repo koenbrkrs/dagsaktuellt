@@ -1,15 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  async redirects() {
-    return [
+  images: {
+    remotePatterns: [
       {
-        source: '/admin',
-        destination: '/admin/index.html',
-        permanent: true,
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
       },
-    ];
+    ],
   },
 };
 

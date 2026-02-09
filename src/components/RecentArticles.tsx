@@ -25,11 +25,19 @@ export default function RecentArticles({ articles }: RecentArticlesProps) {
                 {displayArticles.map((article) => (
                     <Link
                         key={article.id}
-                        href={`/article/${article.id}`}
+                        href={`/articles/${article.id}`}
                         className={styles.articleCard}
                         style={{ textDecoration: 'none', color: 'inherit' }}
                     >
-                        <div className={styles.articleImage}></div>
+                        {article.image ? (
+                            <img
+                                src={article.image}
+                                alt={article.title[language]}
+                                className={styles.articleImage}
+                            />
+                        ) : (
+                            <div className={styles.articleImage}></div>
+                        )}
                         <div className={styles.articleContent}>
                             <span className={styles.articleCategory}>{article.category}</span>
                             <h3 className={styles.articleTitle}>{article.title[language]}</h3>

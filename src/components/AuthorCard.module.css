@@ -1,0 +1,183 @@
+.authorCard {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.authorCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .authorCard:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.imageWrapper {
+    margin-bottom: 20px;
+}
+
+.authorImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-border);
+}
+
+.imagePlaceholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: var(--color-border);
+}
+
+.authorName {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-text-primary);
+}
+
+.authorJobTitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+}
+
+/* Social Media Section */
+.socialSection {
+    margin: 24px 0;
+    width: 100%;
+}
+
+.socialLabel {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 12px;
+}
+
+.socialIcons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.socialIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    color: var(--color-text-primary);
+    font-size: 18px;
+}
+
+.socialIcon:hover {
+    background: var(--color-accent);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Categories Section */
+.categoriesSection {
+    width: 100%;
+    text-align: left;
+    margin: 24px 0;
+    padding: 0 10px;
+}
+
+.categoriesTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--color-text-primary);
+}
+
+.categoriesList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.categoryItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.2s;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+}
+
+.categoryItem:hover {
+    color: var(--color-accent);
+}
+
+.categoryItem:hover .categoryArrow {
+    transform: translateX(4px);
+}
+
+.categoryArrow {
+    font-size: 14px;
+    transition: transform 0.2s;
+}
+
+/* Email Section */
+.emailSection {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.emailIcon {
+    font-size: 16px;
+    color: var(--color-accent);
+}
+
+.emailLink {
+    font-size: 14px;
+    color: var(--color-accent);
+    transition: opacity 0.2s;
+}
+
+.emailLink:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .authorCard {
+        padding: 30px 20px;
+    }
+
+    .authorName {
+        font-size: 20px;
+    }
+
+    .socialIcons {
+        gap: 10px;
+    }
+
+    .socialIcon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}

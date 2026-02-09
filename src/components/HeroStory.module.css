@@ -1,17 +1,28 @@
 .hero {
     background-color: #3a3a3a;
-    /* Dark gray placeholder as requested */
     border-radius: 0;
     width: 100%;
     height: 100vh;
-    /* Full screen height */
     display: flex;
     align-items: flex-end;
     transition: all var(--transition-normal);
     cursor: pointer;
     position: relative;
     padding-bottom: 60px;
-    /* Space for content at bottom */
+    overflow: hidden;
+}
+
+/* Dark overlay for better image contrast */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    pointer-events: none;
 }
 
 /* Ensure content aligns with the rest of the page container */
@@ -21,6 +32,7 @@
     margin: 0 auto;
     padding: 0 40px;
     z-index: 2;
+    position: relative;
 }
 
 [data-theme="dark"] .hero {
@@ -42,49 +54,41 @@
     margin-bottom: 15px;
 }
 
+/* Force white category badges always (ignore theme) */
 .category {
     display: inline-block;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
     padding: 5px 15px;
     border-radius: 15px;
     font-size: 12px;
     margin-right: 10px;
     font-weight: 400;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-[data-theme="light"] .category {
-    background-color: #000000;
-    color: #ffffff;
-}
-
+/* Force white headline always (ignore theme) */
 .headline {
     font-size: 42px;
-    /* Increased size for full screen impact */
     font-weight: 400;
     font-family: var(--font-serif);
     line-height: 1.15;
     margin-bottom: 15px;
-    color: #ffffff;
+    color: #ffffff !important;
     letter-spacing: -0.01em;
     max-width: 800px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-[data-theme="light"] .headline {
-    color: #1a1a1a;
-}
-
+/* Force white excerpt always (ignore theme) */
 .excerpt {
     font-size: 18px;
-    /* Increased size */
     line-height: 1.5;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95) !important;
     margin-bottom: var(--spacing-lg);
     max-width: 600px;
-}
-
-[data-theme="light"] .excerpt {
-    color: #4a4a4a;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .meta {

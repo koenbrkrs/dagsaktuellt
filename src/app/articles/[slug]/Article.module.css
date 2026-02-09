@@ -1,0 +1,207 @@
+.articleContainer {
+    font-family: Georgia, serif;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.hero {
+    background-color: #3a3a3a;
+    border-radius: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    transition: all var(--transition-normal);
+    position: relative;
+    padding-bottom: 60px;
+    overflow: hidden;
+}
+
+/* Dark overlay for better image contrast */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Ensure content aligns with the rest of the page container */
+.content {
+    width: 100%;
+    max-width: var(--grid-max-width);
+    margin: 0 auto;
+    padding: 0 40px;
+    z-index: 2;
+    position: relative;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+/* Force white category badges always (glassmorphism) */
+.category {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-right: 10px;
+    font-weight: 400;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Force white headline always */
+.headline {
+    font-size: 42px;
+    font-weight: 400;
+    font-family: var(--font-serif);
+    line-height: 1.15;
+    margin-bottom: 15px;
+    color: #ffffff !important;
+    letter-spacing: -0.01em;
+    max-width: 800px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.articleMeta {
+    display: flex;
+    gap: 15px;
+    margin: 40px 0;
+    justify-content: center;
+}
+
+.metaBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.metaBtn:hover {
+    background-color: var(--color-border);
+}
+
+/* Author Spotlight Section */
+.authorSpotlight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+    margin: 0 auto;
+    max-width: 800px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.authorImage {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--color-border);
+}
+
+.authorPlaceholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ccc;
+}
+
+.authorInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.authorName {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+}
+
+.authorJob {
+    font-family: sans-serif;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    margin-top: 4px;
+}
+
+.content {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--color-text-primary);
+}
+
+.content p {
+    margin-bottom: 24px;
+}
+
+.content h2 {
+    font-size: 24px;
+    margin: 40px 0 20px;
+    font-weight: normal;
+    color: var(--color-text-primary);
+}
+
+.articleImage {
+    width: 100%;
+    margin: 40px 0;
+    background-color: var(--color-surface);
+    min-height: 400px;
+}
+
+.imageCaption {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-align: center;
+    font-style: italic;
+    color: var(--color-text-secondary);
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .headline {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        height: 60vh;
+        padding-bottom: 40px;
+    }
+
+    .content {
+        padding: 0 20px;
+    }
+
+    .headline {
+        font-size: 24px;
+    }
+}

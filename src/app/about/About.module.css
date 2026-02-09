@@ -18,44 +18,45 @@
     padding: 80px 60px 60px;
     text-align: right;
     transition: background-color 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Dark overlay for better image contrast */
+.heroSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .heroContent {
     max-width: 650px;
+    position: relative;
+    z-index: 2;
 }
 
+/* Force white text always for hero (ignore theme) */
 .heroContent h1 {
     font-size: 42px;
     margin-bottom: 20px;
     font-weight: 400;
-    color: var(--color-text-primary);
-    /* Ensure white in dark, dark in light if variable works that way, but hero is dark based on gradient... */
-}
-
-/* Override hero text color to always be white if the background is explicitly dark */
-[data-theme='light'] .heroSection {
-    background: linear-gradient(180deg, #e0e0e0 0%, #f5f5f5 50%, var(--color-background) 100%);
-}
-
-[data-theme='light'] .heroContent h1 {
-    color: #000;
-}
-
-[data-theme='light'] .heroContent p {
-    color: #333;
-}
-
-/* In dark mode (default in variables usually implies adaptation, but let's be safe */
-.heroContent h1 {
-    color: var(--color-text-primary);
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .heroContent p {
     font-size: 15px;
     font-style: italic;
-    opacity: 0.9;
+    opacity: 0.95;
     line-height: 1.7;
-    color: var(--color-text-primary);
+    color: rgba(255, 255, 255, 0.95) !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 
