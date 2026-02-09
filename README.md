@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Decap CMS for Dagsaktuellt
 
-## Getting Started
+This directory contains the Decap CMS (Netlify CMS) configuration for managing articles.
 
-First, run the development server:
+## Files
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **index.html** - CMS admin interface with Dagsaktuellt branding
+- **config.yml** - CMS configuration (collections, fields, workflow)
+- **preview.js** - Custom preview templates for article rendering
+- **preview-styles.css** - Styles for the CMS preview pane
+
+## Accessing the CMS
+
+### Local Development
+Visit `http://localhost:3000/admin/` when running the dev server.
+
+**Note:** Full authentication requires Netlify Identity, so you'll need to deploy first or use a proxy.
+
+### Production
+Access the CMS at: `https://dagsaktuellt.netlify.app/admin/`
+
+## Setup Instructions
+
+1. **Enable Netlify Identity**
+   - Go to your Netlify dashboard
+   - Navigate to Site settings → Identity
+   - Click "Enable Identity"
+
+2. **Enable Git Gateway**
+   - In Identity settings, click "Services"
+   - Enable "Git Gateway"
+
+3. **Invite Users**
+   - Go to Identity tab
+   - Click "Invite users"
+   - Enter email addresses for content editors
+   - They'll receive an email to set up their account
+
+4. **First Login**
+   - Visit `/admin/` on your deployed site
+   - Click "Login with Netlify Identity"
+   - Set your password from the invitation email
+
+## Content Structure
+
+Articles are saved to `content/articles/` as markdown files with this structure:
+
+```markdown
+---
+title: "Article Title"
+date: 2026-02-09T12:00:00Z
+author: "Author Name"
+category: "News"
+featured_image: "/images/uploads/hero.jpg"
+blocks:
+  - type: text
+    content: "Article content..."
+  - type: graphic
+    image: "/images/uploads/image.jpg"
+    caption: "Image description"
+    alt: "Alt text for accessibility"
+tags:
+  - tag1
+  - tag2
+featured: false
+excerpt: "Brief summary"
+---
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editorial Workflow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The CMS supports three content states:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Drafts** - Work in progress, not published
+2. **In Review** - Ready for editorial review
+3. **Ready** - Approved and ready to publish
 
-## Learn More
+Content moves through these states before being merged to the main branch.
 
-To learn more about Next.js, take a look at the following resources:
+## Modular Content Blocks
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Articles use a flexible block system:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Text Block
+- Rich markdown editor
+- Supports: headings, bold, italic, links, lists, quotes
+- Toggle between rich text and raw markdown modes
 
-## Deploy on Vercel
+### Graphic Block
+- Image upload
+- Caption field (displays in small, italic, gray text)
+- Alt text for accessibility
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Build articles by mixing these blocks in any order!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Customization
+
+### Branding
+- Logo: Update `logo_url` in `config.yml`
+- Theme: Modify styles in `index.html` (CSS variables)
+- Preview: Edit `preview-styles.css` for article preview appearance
+
+### Categories
+Current categories: News, Sports, Culture, Opinion
+
+To modify, edit the `category` field in `config.yml`.
+
+### Fields
+Add custom fields by editing the `fields` array in `config.yml` under the articles collection.
+
+## Support
+
+For issues or questions about Decap CMS:
+- [Decap CMS Documentation](https://decapcms.org/docs/)
+- [Netlify Identity Docs](https://docs.netlify.com/visitor-access/identity/)
