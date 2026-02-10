@@ -152,8 +152,8 @@
 
 @media (max-width: 768px) {
     .hero {
-        height: 60vh;
-        /* Smaller height on mobile */
+        height: 100vh;
+        /* Full-screen on mobile for better impact */
         padding-bottom: 40px;
     }
 
@@ -162,10 +162,13 @@
     }
 
     .headline {
-        font-size: 24px;
+        font-size: 36px;
+        /* Larger than before but still readable */
     }
 
     .excerpt {
-        font-size: 14px;
+        font-size: 16px;
+        /* Improved readability */
+        line-height: 1.6;
     }
 }

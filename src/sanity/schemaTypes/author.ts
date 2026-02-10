@@ -30,7 +30,7 @@ export default defineType({
         defineField({
             name: 'jobTitle',
             title: 'Job Title / Responsibility',
-            type: 'string',
+            type: 'localeString',
             description: 'E.g., "Correspondent Demography" or "Senior Editor"',
         }),
         defineField({

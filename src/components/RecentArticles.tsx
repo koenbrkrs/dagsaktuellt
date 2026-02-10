@@ -39,7 +39,7 @@ export default function RecentArticles({ articles }: RecentArticlesProps) {
                             <div className={styles.articleImage}></div>
                         )}
                         <div className={styles.articleContent}>
-                            <span className={styles.articleCategory}>{article.category}</span>
+                            <span className={styles.articleCategory}>{article.category[language]}</span>
                             <h3 className={styles.articleTitle}>{article.title[language]}</h3>
                             <p className={styles.articleDescription}>{article.excerpt[language]}</p>
                         </div>

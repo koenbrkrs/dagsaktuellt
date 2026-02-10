@@ -14,7 +14,10 @@ export interface Article {
     sv: string;
     en: string;
   };
-  category: string;
+  category: {
+    sv: string;
+    en: string;
+  };
   author: string;
   publishDate: string;
   featured: boolean;

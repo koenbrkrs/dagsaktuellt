@@ -8,14 +8,14 @@ export default defineType({
         defineField({
             name: 'title',
             title: 'Title',
-            type: 'string',
+            type: 'localeString',
         }),
         defineField({
             name: 'slug',
             title: 'Slug',
             type: 'slug',
             options: {
-                source: 'title',
+                source: (doc: any) => doc.title?.sv || doc.title?.en || 'untitled',
                 maxLength: 96,
             },
         }),
@@ -54,19 +54,24 @@ export default defineType({
         defineField({
             name: 'body',
             title: 'Body',
-            type: 'blockContent',
+            type: 'localeBlock',
         }),
     ],
 
     preview: {
         select: {
-            title: 'title',
+            titleSv: 'title.sv',
+            titleEn: 'title.en',
             author: 'author.name',
             media: 'mainImage',
         },
         prepare(selection) {
-            const { author } = selection
-            return { ...selection, subtitle: author && `by ${author}` }
+            const { titleSv, titleEn, author } = selection
+            return {
+                ...selection,
+                title: titleSv || titleEn || 'Untitled',
+                subtitle: author && `by ${author}`
+            }
         },
     },
 })

@@ -14,7 +14,7 @@ const heroQuery = `*[_type == "post"] | order(publishedAt desc)[0...3] {
   mainImage,
   "authorName": author->name,
   "category": categories[0]->title,
-  "excerpt": body[0].children[0].text
+  "excerpt": body
 }`;
 
 // GROQ query for all recent articles
@@ -26,7 +26,7 @@ const articlesQuery = `*[_type == "post"] | order(publishedAt desc)[0...20] {
   mainImage,
   "authorName": author->name,
   "category": categories[0]->title,
-  "excerpt": body[0].children[0].text
+  "excerpt": body
 }`;
 
 // GROQ query for categories with manual background images
@@ -59,22 +59,35 @@ export default async function Home() {
     client.fetch(authorsQuery),
   ]);
 
+  // Helper function to extract first text from body
+  const extractExcerpt = (body: any): { sv: string; en: string } => {
+    const svText = body?.sv?.[0]?.children?.[0]?.text || '';
+    const enText = body?.en?.[0]?.children?.[0]?.text || '';
+    // Fallback for old single-language content
+    const fallbackText = body?.[0]?.children?.[0]?.text || '';
+
+    return {
+      sv: svText || fallbackText,
+      en: enText || fallbackText,
+    };
+  };
+
   // Transform Sanity data to match Article type
   const transformArticle = (post: any): Article => ({
     id: post.slug?.current || post._id,
     title: {
-      sv: post.title || '',
-      en: post.title || '',
+      sv: post.title?.sv || post.title || '',
+      en: post.title?.en || post.title || '',
     },
-    excerpt: {
-      sv: post.excerpt || '',
-      en: post.excerpt || '',
-    },
+    excerpt: extractExcerpt(post.excerpt),
     content: {
       sv: '',
       en: '',
     },
-    category: post.category || 'Uncategorized',
+    category: {
+      sv: post.category?.sv || post.category?.en || post.category || 'Okategoriserad',
+      en: post.category?.en || post.category?.sv || post.category || 'Uncategorized',
+    },
     author: post.authorName || 'Unknown',
     publishDate: new Date(post.publishedAt).toLocaleDateString('sv-SE', {
       year: 'numeric',
@@ -89,12 +102,12 @@ export default async function Home() {
   const transformCategory = (cat: any): Category => ({
     id: cat._id,
     name: {
-      sv: cat.title || '',
-      en: cat.title || '',
+      sv: cat.title?.sv || cat.title || '',
+      en: cat.title?.en || cat.title || '',
     },
     description: {
-      sv: cat.description || '',
-      en: cat.description || '',
+      sv: cat.description?.sv || cat.description || '',
+      en: cat.description?.en || cat.description || '',
     },
     image: cat.image ? urlForImage(cat.image).width(800).height(400).url() : undefined,
   });
@@ -102,12 +115,17 @@ export default async function Home() {
   // Transform authors and calculate top categories
   const transformAuthor = (author: any) => {
     // Flatten all categories from author's posts
-    const allCategories = author.posts?.flatMap((post: any) => post.categories || []) || [];
+    const allCategories = author.posts?.flatMap((post: any) => {
+      // Handle both localized and non-localized categories
+      return post.categories?.map((cat: any) => cat?.sv || cat?.en || cat || '') || [];
+    }) || [];
 
     // Count category occurrences
     const categoryCount: { [key: string]: number } = {};
     allCategories.forEach((cat: string) => {
-      categoryCount[cat] = (categoryCount[cat] || 0) + 1;
+      if (cat) {
+        categoryCount[cat] = (categoryCount[cat] || 0) + 1;
+      }
     });
 
     // Sort by frequency and get top 5
@@ -118,7 +136,7 @@ export default async function Home() {
 
     return {
       name: author.name || '',
-      jobTitle: author.jobTitle,
+      jobTitle: author.jobTitle?.sv || author.jobTitle?.en || author.jobTitle || '',
       image: author.image ? urlForImage(author.image).width(120).height(120).url() : undefined,
       email: author.email,
       social: author.social,

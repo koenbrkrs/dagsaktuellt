@@ -38,7 +38,7 @@ export default function HeroStory({ articles }: { articles: Article[] }) {
         >
             <div className={styles.content}>
                 <div className={styles.categories}>
-                    <span className={styles.category}>{article.category}</span>
+                    <span className={styles.category}>{article.category[language]}</span>
                     <span className={styles.category}>{article.publishDate}</span>
                 </div>
                 <Link href={`/articles/${article.id}`}>

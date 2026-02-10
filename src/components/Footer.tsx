@@ -61,8 +61,8 @@ export default function Footer() {
                         <Image
                             src={theme === 'dark' ? '/logo-white.png' : '/logo-black.png'}
                             alt="Dagsaktuellt"
-                            width={180}
-                            height={45}
+                            width={120}
+                            height={25}
                             className={styles.footerLogoImage}
                         />
                     </div>

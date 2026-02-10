@@ -34,10 +34,9 @@ interface HomeClientProps {
 export default function HomeClient({ articles, categories, heroArticles, featuredAuthors }: HomeClientProps) {
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
-    // Filter logic
-    const filteredArticles = activeCategory
-        ? articles.filter((a) => a.category === activeCategory)
-        : articles;
+    // Filter logic removed as it was unused and causing type errors
+    // distinct filtering is handled by navigation to /articles page
+    const filteredArticles = articles;
 
     return (
         <>

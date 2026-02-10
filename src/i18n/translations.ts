@@ -52,6 +52,23 @@ export const translations = {
 
         // Misc
         breaking: 'BRYT ANDE',
+        // Filters & Search
+        filters: 'Filter',
+        clearAll: 'Rensa alla',
+        search: 'Sök',
+        searchPlaceholder: 'Sök artiklar...',
+        category: 'Kategori',
+        allCategories: 'Alla kategorier',
+        selected: 'valda',
+        published: 'Publicerad',
+        allTime: 'All tid',
+        today: 'Idag',
+        lastWeek: 'Senaste 7 dagarna',
+        lastMonth: 'Senaste 30 dagarna',
+        lastYear: 'Senaste året',
+        noArticlesFound: 'Inga artiklar hittades',
+        tryAdjustingFilters: 'Prova att justera dina filter',
+        resetFilters: 'Återställ filter',
     },
     en: {
         // Navigation
@@ -106,6 +123,24 @@ export const translations = {
 
         // Misc
         breaking: 'BREAKING',
+
+        // Filters & Search
+        filters: 'Filters',
+        clearAll: 'Clear All',
+        search: 'Search',
+        searchPlaceholder: 'Search articles...',
+        category: 'Category',
+        allCategories: 'All Categories',
+        selected: 'selected',
+        published: 'Published',
+        allTime: 'All Time',
+        today: 'Today',
+        lastWeek: 'Last 7 Days',
+        lastMonth: 'Last 30 Days',
+        lastYear: 'Last Year',
+        noArticlesFound: 'No articles found',
+        tryAdjustingFilters: 'Try adjusting your filters',
+        resetFilters: 'Reset Filters',
     }
 };
 

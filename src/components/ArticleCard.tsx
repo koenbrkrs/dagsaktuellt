@@ -17,7 +17,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             <Link href={`/article/${article.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className={styles.imageContainer}></div>
                 <div className={styles.content}>
-                    <span className={styles.category}>{article.category}</span>
+                    <span className={styles.category}>{article.category[language]}</span>
                     <h3 className={styles.headline}>{article.title[language]}</h3>
                     <p className={styles.excerpt}>{article.excerpt[language]}</p>
                 </div>

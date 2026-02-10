@@ -8,12 +8,12 @@ export default defineType({
         defineField({
             name: 'title',
             title: 'Title',
-            type: 'string',
+            type: 'localeString',
         }),
         defineField({
             name: 'description',
             title: 'Description',
-            type: 'text',
+            type: 'localeString',
         }),
         defineField({
             name: 'image',

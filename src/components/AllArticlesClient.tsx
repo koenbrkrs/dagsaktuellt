@@ -5,22 +5,28 @@ import Link from 'next/link';
 import styles from '@/app/articles/AllArticles.module.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+interface LocalizedString {
+    sv: string;
+    en: string;
+}
 
 interface Article {
     _id: string;
-    title: string;
+    title: LocalizedString;
     slug: string;
     publishedAt: string;
     mainImage?: any;
     imageUrl?: string;
-    category?: string;
+    category?: LocalizedString;
     author?: string;
-    excerpt?: string;
+    excerpt?: LocalizedString;
 }
 
 interface Category {
     _id: string;
-    title: string;
+    title: LocalizedString;
 }
 
 interface AllArticlesClientProps {
@@ -29,6 +35,7 @@ interface AllArticlesClientProps {
 }
 
 export default function AllArticlesClient({ initialArticles, initialCategories }: AllArticlesClientProps) {
+    const { language, t } = useLanguage();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [dateFilter, setDateFilter] = useState('');
@@ -37,15 +44,19 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
     // Filter articles based on all criteria
     const filteredArticles = initialArticles.filter((article) => {
         // Search filter
+        const title = article.title[language] || article.title.en || '';
+        const excerpt = article.excerpt?.[language] || article.excerpt?.en || '';
+
         const matchesSearch =
             searchQuery === '' ||
-            article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            article.excerpt?.toLowerCase().includes(searchQuery.toLowerCase());
+            title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            excerpt.toLowerCase().includes(searchQuery.toLowerCase());
 
         // Category filter
+        const category = article.category?.[language] || article.category?.en || '';
         const matchesCategory =
             selectedCategories.length === 0 ||
-            (article.category && selectedCategories.includes(article.category));
+            (category && selectedCategories.includes(category));
 
         // Date filter
         let matchesDate = true;
@@ -88,19 +99,19 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
                 <aside className={styles.sidebar}>
                     <div className={styles.filterSection}>
                         <div className={styles.filterHeader}>
-                            <h2 className={styles.filterTitle}>Filters</h2>
+                            <h2 className={styles.filterTitle}>{t('filters')}</h2>
                             <button onClick={clearFilters} className={styles.clearButton}>
-                                Clear All
+                                {t('clearAll')}
                             </button>
                         </div>
 
                         {/* Search */}
                         <div className={styles.filterGroup}>
-                            <label className={styles.filterLabel}>Search</label>
+                            <label className={styles.filterLabel}>{t('search')}</label>
                             <input
                                 type="text"
                                 className={styles.filterInput}
-                                placeholder="Search articles..."
+                                placeholder={t('searchPlaceholder')}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -108,7 +119,7 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
 
                         {/* Category Multi-Select Dropdown */}
                         <div className={styles.filterGroup}>
-                            <label className={styles.filterLabel}>Category</label>
+                            <label className={styles.filterLabel}>{t('category')}</label>
                             <div className={styles.dropdownContainer}>
                                 <div
                                     className={`${styles.dropdownToggle} ${isDropdownOpen ? styles.isOpen : ''}`}
@@ -116,26 +127,29 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
                                 >
                                     <span>
                                         {selectedCategories.length === 0
-                                            ? 'All Categories'
-                                            : `${selectedCategories.length} selected`}
+                                            ? t('allCategories')
+                                            : `${selectedCategories.length} ${t('selected')}`}
                                     </span>
                                     <span className={styles.dropdownArrow}>▼</span>
                                 </div>
                                 {isDropdownOpen && (
                                     <div className={styles.dropdownMenu}>
-                                        {initialCategories.map((category) => (
-                                            <div
-                                                key={category._id}
-                                                className={`${styles.dropdownItem} ${selectedCategories.includes(category.title) ? styles.selected : ''
-                                                    }`}
-                                                onClick={() => toggleCategory(category.title)}
-                                            >
-                                                <div className={styles.checkbox}>
-                                                    <span className={styles.checkboxIcon}>✓</span>
+                                        {initialCategories.map((category) => {
+                                            const catTitle = category.title[language] || category.title.en;
+                                            return (
+                                                <div
+                                                    key={category._id}
+                                                    className={`${styles.dropdownItem} ${selectedCategories.includes(catTitle) ? styles.selected : ''
+                                                        }`}
+                                                    onClick={() => toggleCategory(catTitle)}
+                                                >
+                                                    <div className={styles.checkbox}>
+                                                        <span className={styles.checkboxIcon}>✓</span>
+                                                    </div>
+                                                    <span>{catTitle}</span>
                                                 </div>
-                                                <span>{category.title}</span>
-                                            </div>
-                                        ))}
+                                            );
+                                        })}
                                     </div>
                                 )}
                             </div>
@@ -143,17 +157,17 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
 
                         {/* Date Filter */}
                         <div className={styles.filterGroup}>
-                            <label className={styles.filterLabel}>Published</label>
+                            <label className={styles.filterLabel}>{t('published')}</label>
                             <select
                                 className={styles.filterSelect}
                                 value={dateFilter}
                                 onChange={(e) => setDateFilter(e.target.value)}
                             >
-                                <option value="">All Time</option>
-                                <option value="today">Today</option>
-                                <option value="week">Last 7 Days</option>
-                                <option value="month">Last 30 Days</option>
-                                <option value="year">Last Year</option>
+                                <option value="">{t('allTime')}</option>
+                                <option value="today">{t('today')}</option>
+                                <option value="week">{t('lastWeek')}</option>
+                                <option value="month">{t('lastMonth')}</option>
+                                <option value="year">{t('lastYear')}</option>
                             </select>
                         </div>
                     </div>
@@ -164,10 +178,10 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
                     <div className={styles.articlesGrid}>
                         {filteredArticles.length === 0 ? (
                             <div className={styles.noResults}>
-                                <h3>No articles found</h3>
-                                <p>Try adjusting your filters</p>
+                                <h3>{t('noArticlesFound')}</h3>
+                                <p>{t('tryAdjustingFilters')}</p>
                                 <button onClick={clearFilters} className={styles.resetButton}>
-                                    Reset Filters
+                                    {t('resetFilters')}
                                 </button>
                             </div>
                         ) : (
@@ -189,19 +203,25 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
                                     <div className={styles.articleContent}>
                                         <div className={styles.articleTags}>
                                             {article.category && (
-                                                <span className={styles.articleTag}>{article.category}</span>
+                                                <span className={styles.articleTag}>
+                                                    {article.category[language] || article.category.en}
+                                                </span>
                                             )}
                                             <span className={styles.articleDate}>
-                                                {new Date(article.publishedAt).toLocaleDateString('en-US', {
+                                                {new Date(article.publishedAt).toLocaleDateString(language === 'sv' ? 'sv-SE' : 'en-US', {
                                                     month: 'short',
                                                     day: 'numeric',
                                                     year: 'numeric',
                                                 })}
                                             </span>
                                         </div>
-                                        <h3 className={styles.articleTitle}>{article.title}</h3>
+                                        <h3 className={styles.articleTitle}>
+                                            {article.title[language] || article.title.en}
+                                        </h3>
                                         {article.excerpt && (
-                                            <p className={styles.articleDescription}>{article.excerpt}</p>
+                                            <p className={styles.articleDescription}>
+                                                {article.excerpt[language] || article.excerpt.en}
+                                            </p>
                                         )}
                                     </div>
                                 </Link>
