@@ -29,9 +29,15 @@ interface HomeClientProps {
     categories: Category[];
     heroArticles: Article[];
     featuredAuthors: FeaturedAuthor[];
+    siteSettings?: any;
+    topAuthors?: any;
 }
 
-export default function HomeClient({ articles, categories, heroArticles, featuredAuthors }: HomeClientProps) {
+export default function HomeClient({ articles, categories, heroArticles, featuredAuthors, topCategories, siteSettings, topAuthors, footerCategories, footerAuthors }: HomeClientProps & {
+    topCategories: { title: { sv: string; en: string } }[];
+    footerCategories?: { title: { sv: string; en: string } }[];
+    footerAuthors?: { name: string }[];
+}) {
     const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
     // Filter logic removed as it was unused and causing type errors
@@ -40,7 +46,7 @@ export default function HomeClient({ articles, categories, heroArticles, feature
 
     return (
         <>
-            <Header />
+            <Header topCategories={topCategories} />
             <main>
                 <HeroStory articles={heroArticles} />
                 <div className="container">
@@ -62,7 +68,7 @@ export default function HomeClient({ articles, categories, heroArticles, feature
                     <NewsletterModule />
                 </div>
             </main>
-            <Footer />
+            <Footer topCategories={footerCategories} topAuthors={footerAuthors} />
         </>
     );
 }

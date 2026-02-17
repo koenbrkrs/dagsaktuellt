@@ -14,7 +14,24 @@
 }
 
 [data-theme="light"] .header.scrolled {
-    background-color: #333333;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .header.scrolled .nav a,
+[data-theme="light"] .header.scrolled .masthead h1 {
+    color: #1a1a1a;
+    text-shadow: none;
+}
+
+[data-theme="light"] .header.scrolled .toggleButton {
+    color: #1a1a1a;
+    border-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .header.scrolled .toggleButton:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] .header.scrolled {

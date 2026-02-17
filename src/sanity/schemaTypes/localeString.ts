@@ -1,9 +1,13 @@
 import { defineType } from 'sanity'
+import TranslateStringInput from '../components/TranslateStringInput'
 
 export default defineType({
     name: 'localeString',
     title: 'Localized String',
     type: 'object',
+    components: {
+        input: TranslateStringInput,
+    },
     fields: [
         {
             name: 'sv',

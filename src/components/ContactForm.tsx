@@ -2,8 +2,14 @@
 
 import { FormEvent, useState } from 'react';
 import styles from '@/app/about/About.module.css';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-export default function ContactForm() {
+interface ContactFormProps {
+    recipientEmail?: string;
+}
+
+export default function ContactForm({ recipientEmail = '' }: ContactFormProps) {
+    const { t } = useLanguage();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -12,10 +18,15 @@ export default function ContactForm() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // TODO: Implement form submission logic (e.g., API call)
-        console.log('Form submitted:', formData);
-        // Reset form after submission
-        setFormData({ name: '', email: '', message: '' });
+
+        // Build mailto: link
+        const subject = encodeURIComponent('Contact Form Dagsaktuellt');
+        const body = encodeURIComponent(
+            `${formData.message}\n\n${formData.name}\n\n${formData.email}`
+        );
+        const mailto = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+        window.location.href = mailto;
     };
 
     return (
@@ -24,7 +35,7 @@ export default function ContactForm() {
                 <div className={styles.formGroup}>
                     <input
                         type="text"
-                        placeholder="Namn"
+                        placeholder={t('contactName')}
                         value={formData.name}
                         onChange={(e) =>
                             setFormData({ ...formData, name: e.target.value })
@@ -34,7 +45,7 @@ export default function ContactForm() {
                 <div className={styles.formGroup}>
                     <input
                         type="email"
-                        placeholder="E-post (krävs)"
+                        placeholder={t('contactEmail')}
                         value={formData.email}
                         onChange={(e) =>
                             setFormData({ ...formData, email: e.target.value })
@@ -45,7 +56,7 @@ export default function ContactForm() {
             </div>
             <div className={styles.formGroup}>
                 <textarea
-                    placeholder="Meddelande"
+                    placeholder={t('contactMessage')}
                     value={formData.message}
                     onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
@@ -53,8 +64,9 @@ export default function ContactForm() {
                 />
             </div>
             <button type="submit" className={styles.submitBtn}>
-                Skicka
+                {t('contactSend')}
             </button>
         </form>
     );
 }
+

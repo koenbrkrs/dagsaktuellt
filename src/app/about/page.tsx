@@ -1,117 +1,99 @@
-import Link from 'next/link';
-import styles from './About.module.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import ContactForm from '@/components/ContactForm';
 import { client } from '@/sanity/lib/client';
 import { urlForImage } from '@/sanity/lib/image';
-
-// Data
-import authorData from '@/data/author.json';
-import categoriesData from '@/data/categories.json';
-import { Author, Category } from '@/types';
+import AboutClient from './AboutClient';
 
 export const revalidate = 60;
 
 // GROQ query for About Page data
 const aboutPageQuery = `*[_type == "aboutPage"][0] {
   title,
-  mainImage
+  mainImage,
+  heroSubtitle,
+  aboutBio
 }`;
 
+// Helper to cross-fill localized strings
+function localizedStr(val: any): { sv: string; en: string } {
+    if (val == null) return { sv: '', en: '' };
+    if (typeof val === 'string') return { sv: val, en: val };
+    const sv = typeof val.sv === 'string' ? val.sv : '';
+    const en = typeof val.en === 'string' ? val.en : '';
+    return { sv: sv || en, en: en || sv };
+}
+
 export default async function AboutPage() {
-    // Fetch About Page data
     const aboutPageData = await client.fetch(aboutPageQuery);
 
-    // Get background image URL
     const heroImageUrl = aboutPageData?.mainImage
         ? urlForImage(aboutPageData.mainImage).width(1920).height(800).url()
         : '';
 
-    const author = authorData as Author;
-    const categories = categoriesData as Category[];
+    // Fetch header + footer data
+    const topCategoriesQuery = `*[_type == "category" && displayInHeader == true]{title}`;
+    const footerCategoriesQuery = `*[_type == "category"]{
+        title,
+        "articleCount": count(*[_type == "post" && references(^._id)])
+    } | order(articleCount desc)[0...4]`;
+    const topAuthorsQuery = `*[_type == "author"]|order(count(*[_type == "post" && references(^._id)]) desc)[0...4]{name}`;
+
+    // Fetch all categories for sidebar
+    const allCategoriesQuery = `*[_type == "category"]{_id, title}`;
+
+    // Fetch author data from CMS
+    const authorQuery = `*[_type == "author" && showOnLandingPage == true][0]{
+        name,
+        jobTitle,
+        image,
+        email,
+        social
+    }`;
+
+    const [rawTopCategories, rawFooterCats, topAuthors, allCategories, authorData] = await Promise.all([
+        client.fetch(topCategoriesQuery),
+        client.fetch(footerCategoriesQuery),
+        client.fetch(topAuthorsQuery),
+        client.fetch(allCategoriesQuery),
+        client.fetch(authorQuery),
+    ]);
+
+    const topCategories = rawTopCategories.map((cat: any) => ({
+        title: localizedStr(cat.title),
+    }));
+
+    const footerCategories = rawFooterCats.map((cat: any) => ({
+        title: localizedStr(cat.title),
+    }));
+
+    const categories = allCategories.map((cat: any) => ({
+        _id: cat._id,
+        title: localizedStr(cat.title),
+    }));
+
+    // Build author prop
+    const author = authorData ? {
+        name: authorData.name || '',
+        jobTitle: localizedStr(authorData.jobTitle),
+        image: authorData.image ? urlForImage(authorData.image).width(200).height(200).url() : undefined,
+        email: authorData.email || '',
+        social: authorData.social,
+    } : null;
+
+    const aboutBio = localizedStr(aboutPageData?.aboutBio);
+    const heroSubtitle = localizedStr(aboutPageData?.heroSubtitle);
+    const aboutTitle = aboutPageData?.title || 'Om DagsAktuellt';
 
     return (
-        <>
-            <Header />
-
-            <section
-                className={styles.heroSection}
-                style={{
-                    backgroundImage: heroImageUrl ? `url(${heroImageUrl})` : 'none',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
-            >
-                <div className={styles.heroContent}>
-                    <h1>{aboutPageData?.title || 'Om DagsAktuellt'}</h1>
-                    <p>
-                        Dagsaktuellt är din källa för djupgående analyser och nyheter om demografi,
-                        samhällsutveckling och politik i Sverige och världen.
-                    </p>
-                </div>
-            </section>
-
-            <div className={styles.mainContent}>
-                <aside className={styles.sidebar}>
-                    <div className={styles.authorCard}>
-                        <div className={styles.authorImage}></div>
-                        <h2 className={styles.authorName}>{author.name}</h2>
-                        <p className={styles.authorTitle}>{author.title.sv}</p>
-
-                        <div className={styles.authorSocial}>
-                            <p>Följ på:</p>
-                            <div className={styles.socialIcons}>
-                                <div className={styles.socialIcon}>📘</div>
-                                <div className={styles.socialIcon}>🐦</div>
-                                <div className={styles.socialIcon}>📷</div>
-                                <div className={styles.socialIcon}>💼</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={styles.sidebarSection}>
-                        <h3>Kategorier</h3>
-                        <ul>
-                            {categories.map((cat) => (
-                                <li key={cat.id}>{cat.name.sv}</li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className={styles.authorEmail}>
-                        <p className={styles.emailLabel}>
-                            <span>📧</span>
-                            <span>Email</span>
-                        </p>
-                        <p className={styles.emailAddress}>{author.email}</p>
-                    </div>
-                </aside>
-
-                <main className={styles.contentSection}>
-                    <section className={styles.aboutSection}>
-                        <h2>Om {author.name}</h2>
-                        <p>{author.bio.sv}</p>
-                        <p>
-                            Dagsaktuellt drivs av en passion för att förstå de underliggande strömningarna
-                            i vårt samhälle. Vi tror på att data och demografi berättar en historia som
-                            ofta förbises i den dagliga nyhetsrapporteringen.
-                        </p>
-                    </section>
-
-                    <section className={styles.contactSection}>
-                        <h2>Kontakt</h2>
-                        <p className={styles.contactDescription}>
-                            Vill du få dina tankar publicerade i en artikel? Vill du samarbeta? Feedback?
-                            Kontakta mig i formuläret nedan så hörs vi!
-                        </p>
-
-                        <ContactForm />
-                    </section>
-                </main>
-            </div>
-
-            <Footer />
-        </>
+        <AboutClient
+            heroImageUrl={heroImageUrl}
+            aboutTitle={aboutTitle}
+            heroSubtitle={heroSubtitle}
+            aboutBio={aboutBio}
+            author={author}
+            categories={categories}
+            topCategories={topCategories}
+            footerCategories={footerCategories}
+            footerAuthors={topAuthors}
+        />
     );
 }
+

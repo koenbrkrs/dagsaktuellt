@@ -99,10 +99,9 @@
     position: relative;
 }
 
-/* Navigation Arrow */
+/* Navigation Arrows */
 .navArrow {
     position: absolute;
-    right: -60px;
     top: 50%;
     transform: translateY(-50%);
     background-color: #666666;
@@ -117,6 +116,14 @@
     transition: all var(--transition-normal);
     color: #ffffff;
     z-index: 10;
+}
+
+.navArrowRight {
+    right: -60px;
+}
+
+.navArrowLeft {
+    left: -60px;
 }
 
 [data-theme="light"] .navArrow {
@@ -172,8 +179,11 @@
 
 /* Responsive */
 @media (max-width: 1200px) {
-    .navArrow {
+    .navArrowRight {
         right: -50px;
+    }
+    .navArrowLeft {
+        left: -50px;
     }
 }
 

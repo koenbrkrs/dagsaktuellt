@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from '@/app/articles/AllArticles.module.css';
 import Header from '@/components/Header';
@@ -32,14 +32,71 @@ interface Category {
 interface AllArticlesClientProps {
     initialArticles: Article[];
     initialCategories: Category[];
+    initialAuthors?: string[];
+    topCategories: { title: { sv: string; en: string } }[];
+    footerCategories?: { title: { sv: string; en: string } }[];
+    footerAuthors?: { name: string }[];
 }
 
-export default function AllArticlesClient({ initialArticles, initialCategories }: AllArticlesClientProps) {
+export default function AllArticlesClient({ initialArticles, initialCategories, initialAuthors = [], topCategories, footerCategories, footerAuthors }: AllArticlesClientProps) {
     const { language, t } = useLanguage();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+    // Derive unique authors from articles
+    const derivedAuthors = Array.from(
+        new Set(initialArticles.map((a) => a.author).filter((a): a is string => !!a))
+    ).sort();
+    const allAuthors = initialAuthors.length > 0 ? initialAuthors : derivedAuthors;
+
+    // Parse URL params for initial filters
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const categoryParam = params.get('category');
+            const authorParam = params.get('author');
+
+            if (categoryParam) {
+                setSelectedCategories([categoryParam]);
+            }
+        }
+    }, []);
+
+    const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]);
     const [dateFilter, setDateFilter] = useState('');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isAuthorDropdownOpen, setIsAuthorDropdownOpen] = useState(false);
+
+    // Mutual exclusion: close other dropdowns when one opens
+    const toggleCategoryDropdown = () => {
+        setIsDropdownOpen((prev) => {
+            if (!prev) setIsAuthorDropdownOpen(false);
+            return !prev;
+        });
+    };
+
+    const toggleAuthorDropdown = () => {
+        setIsAuthorDropdownOpen((prev) => {
+            if (!prev) setIsDropdownOpen(false);
+            return !prev;
+        });
+    };
+
+    // Parse URL params for initial filters
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const categoryParam = params.get('category');
+            const authorParam = params.get('author');
+
+            if (categoryParam) {
+                setSelectedCategories([categoryParam]);
+            }
+            if (authorParam) {
+                setSelectedAuthors([authorParam]);
+            }
+        }
+    }, []);
 
     // Filter articles based on all criteria
     const filteredArticles = initialArticles.filter((article) => {
@@ -58,6 +115,12 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
             selectedCategories.length === 0 ||
             (category && selectedCategories.includes(category));
 
+        // Author filter
+        const author = article.author || '';
+        const matchesAuthor =
+            selectedAuthors.length === 0 ||
+            (author && selectedAuthors.includes(author));
+
         // Date filter
         let matchesDate = true;
         if (dateFilter) {
@@ -71,7 +134,7 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
             else if (dateFilter === 'year') matchesDate = daysDiff <= 365;
         }
 
-        return matchesSearch && matchesCategory && matchesDate;
+        return matchesSearch && matchesCategory && matchesAuthor && matchesDate;
     });
 
     // Toggle category selection
@@ -83,17 +146,28 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
         );
     };
 
+    // Toggle author selection
+    const toggleAuthor = (authorName: string) => {
+        setSelectedAuthors((prev) =>
+            prev.includes(authorName)
+                ? prev.filter((a) => a !== authorName)
+                : [...prev, authorName]
+        );
+    };
+
     // Clear all filters
     const clearFilters = () => {
         setSearchQuery('');
         setSelectedCategories([]);
+        setSelectedAuthors([]);
         setDateFilter('');
         setIsDropdownOpen(false);
+        setIsAuthorDropdownOpen(false);
     };
 
     return (
         <>
-            <Header />
+            <Header topCategories={topCategories} solidHeader />
             <div className={styles.mainContainer}>
                 {/* Sidebar with Filters */}
                 <aside className={styles.sidebar}>
@@ -123,7 +197,7 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
                             <div className={styles.dropdownContainer}>
                                 <div
                                     className={`${styles.dropdownToggle} ${isDropdownOpen ? styles.isOpen : ''}`}
-                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    onClick={toggleCategoryDropdown}
                                 >
                                     <span>
                                         {selectedCategories.length === 0
@@ -144,12 +218,47 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
                                                     onClick={() => toggleCategory(catTitle)}
                                                 >
                                                     <div className={styles.checkbox}>
-                                                        <span className={styles.checkboxIcon}>✓</span>
+                                                        {selectedCategories.includes(catTitle) && <span className={styles.checkboxIcon}>✓</span>}
                                                     </div>
                                                     <span>{catTitle}</span>
                                                 </div>
                                             );
                                         })}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Author Multi-Select Dropdown */}
+                        <div className={styles.filterGroup}>
+                            <label className={styles.filterLabel}>{t('author')}</label>
+                            <div className={styles.dropdownContainer}>
+                                <div
+                                    className={`${styles.dropdownToggle} ${isAuthorDropdownOpen ? styles.isOpen : ''}`}
+                                    onClick={toggleAuthorDropdown}
+                                >
+                                    <span>
+                                        {selectedAuthors.length === 0
+                                            ? t('allAuthors')
+                                            : `${selectedAuthors.length} ${t('selected')}`}
+                                    </span>
+                                    <span className={styles.dropdownArrow}>▼</span>
+                                </div>
+                                {isAuthorDropdownOpen && (
+                                    <div className={styles.dropdownMenu}>
+                                        {allAuthors.map((authorName, index) => (
+                                            <div
+                                                key={index}
+                                                className={`${styles.dropdownItem} ${selectedAuthors.includes(authorName) ? styles.selected : ''
+                                                    }`}
+                                                onClick={() => toggleAuthor(authorName)}
+                                            >
+                                                <div className={styles.checkbox}>
+                                                    {selectedAuthors.includes(authorName) && <span className={styles.checkboxIcon}>✓</span>}
+                                                </div>
+                                                <span>{authorName}</span>
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
                             </div>
@@ -230,7 +339,7 @@ export default function AllArticlesClient({ initialArticles, initialCategories }
                     </div>
                 </main>
             </div>
-            <Footer />
+            <Footer topCategories={footerCategories} topAuthors={footerAuthors} />
         </>
     );
 }

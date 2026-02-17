@@ -49,6 +49,19 @@ export default function CategoryBar({ categories, activeCategory, onCategoryChan
             </div>
 
             <div className={styles.carouselWrapper}>
+                {/* Left Navigation Arrow */}
+                {totalSlides > 1 && (
+                    <button
+                        className={`${styles.navArrow} ${styles.navArrowLeft}`}
+                        onClick={prevSlide}
+                        aria-label="Previous categories"
+                    >
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M15 18l-6-6 6-6" />
+                        </svg>
+                    </button>
+                )}
+
                 <div className={styles.categoriesGrid}>
                     {currentCategories.map((category) => (
                         <Link
@@ -68,10 +81,10 @@ export default function CategoryBar({ categories, activeCategory, onCategoryChan
                     ))}
                 </div>
 
-                {/* Navigation Arrow - only show if more than one slide */}
+                {/* Right Navigation Arrow */}
                 {totalSlides > 1 && (
                     <button
-                        className={styles.navArrow}
+                        className={`${styles.navArrow} ${styles.navArrowRight}`}
                         onClick={nextSlide}
                         aria-label="Next categories"
                     >

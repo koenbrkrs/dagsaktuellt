@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6';
@@ -7,52 +8,101 @@ import styles from './Footer.module.css';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 
-export default function Footer() {
-    const { t } = useLanguage();
+interface FooterProps {
+    topCategories?: { title: { sv: string; en: string }; slug?: string }[];
+    topAuthors?: { name: string; slug?: string }[];
+}
+
+export default function Footer({ topCategories = [], topAuthors = [] }: FooterProps) {
+    const { language, t } = useLanguage();
     const { theme } = useTheme();
+    const [email, setEmail] = useState('');
+    const [subStatus, setSubStatus] = useState<'idle' | 'loading' | 'success' | 'duplicate' | 'error'>('idle');
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!email.trim()) return;
+        setSubStatus('loading');
+        try {
+            const res = await fetch('/.netlify/functions/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+            });
+            const data = await res.json();
+            if (!res.ok) { setSubStatus('error'); return; }
+            if (data.alreadyExists) { setSubStatus('duplicate'); }
+            else { setSubStatus('success'); setEmail(''); }
+        } catch { setSubStatus('error'); }
+    };
 
     return (
         <footer className={styles.footer}>
             <div className="container">
                 <div className={styles.footerContent}>
-                    {/* Categories Column */}
+                    {/* Categories Column — dynamic top 4 */}
                     <div className={styles.footerColumn}>
                         <h3>{t('categories')}</h3>
                         <ul>
-                            <li><Link href="#">{t('currentAffairs')}</Link></li>
-                            <li><Link href="#">{t('recent')}</Link></li>
-                            <li><Link href="#">{t('sweden')}</Link></li>
-                            <li><Link href="#">{t('politics')}</Link></li>
+                            {topCategories.slice(0, 4).map((cat, i) => (
+                                <li key={i}>
+                                    <Link href={`/articles?category=${encodeURIComponent(cat.title[language] || cat.title.sv)}`}>
+                                        {cat.title[language] || cat.title.sv}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    {/* Authors Column */}
+                    {/* Authors Column — dynamic top 4 */}
                     <div className={styles.footerColumn}>
                         <h3>{t('authors')}</h3>
                         <ul>
-                            <li><Link href="#">Julius</Link></li>
-                            <li><Link href="#">Sarah</Link></li>
-                            <li><Link href="#">Michael</Link></li>
-                            <li><Link href="#">Emma</Link></li>
+                            {topAuthors.slice(0, 4).map((author, i) => (
+                                <li key={i}>
+                                    <Link href={`/articles?author=${encodeURIComponent(author.name)}`}>
+                                        {author.name}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    {/* About Column */}
+                    {/* Overall Column (was "About") */}
                     <div className={styles.footerColumn}>
-                        <h3>{t('about')}</h3>
+                        <h3>{t('overall')}</h3>
                         <ul>
-                            <li><Link href="#">{t('aboutUs')}</Link></li>
-                            <li><Link href="#">{t('contact')}</Link></li>
-                            <li><Link href="#">{t('advertise')}</Link></li>
-                            <li><Link href="#">{t('careers')}</Link></li>
+                            <li><Link href="/about">{t('aboutUs')}</Link></li>
+                            <li><Link href="/articles">{t('allArticlesLink')}</Link></li>
+                            <li><Link href="/about#contact">{t('contact')}</Link></li>
                         </ul>
                     </div>
 
                     {/* Subscribe Section */}
                     <div className={styles.footerSubscribe}>
                         <h3>{t('subscribeNewsletter')}</h3>
-                        <input type="email" placeholder="youremail@email.com" />
-                        <button>{t('subscribe')}</button>
+                        {subStatus === 'success' ? (
+                            <p className={styles.footerSubSuccess}>{t('subscribeSuccess')}</p>
+                        ) : subStatus === 'duplicate' ? (
+                            <p className={styles.footerSubDuplicate}>{t('subscribeDuplicate')}</p>
+                        ) : (
+                            <form onSubmit={handleSubscribe}>
+                                <input
+                                    type="email"
+                                    placeholder="youremail@email.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    disabled={subStatus === 'loading'}
+                                />
+                                <button type="submit" disabled={subStatus === 'loading'}>
+                                    {subStatus === 'loading' ? '...' : t('subscribe')}
+                                </button>
+                            </form>
+                        )}
+                        {subStatus === 'error' && (
+                            <p className={styles.footerSubError}>{t('subscribeError')}</p>
+                        )}
                     </div>
                 </div>
 
@@ -90,3 +140,4 @@ export default function Footer() {
         </footer>
     );
 }
+

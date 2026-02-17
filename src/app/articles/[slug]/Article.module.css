@@ -29,7 +29,18 @@
     bottom: 0;
     background: rgba(0, 0, 0, 0.2);
     z-index: 1;
+    z-index: 1;
     pointer-events: none;
+}
+
+.heroImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
 }
 
 /* Ensure content aligns with the rest of the page container */
@@ -73,6 +84,17 @@
     letter-spacing: -0.01em;
     max-width: 800px;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Force white excerpt always (ignore theme) */
+.excerpt {
+    font-size: 18px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.95) !important;
+    margin-bottom: var(--spacing-lg);
+    max-width: 600px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .articleMeta {

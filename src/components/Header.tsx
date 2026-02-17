@@ -9,7 +9,12 @@ import styles from './Header.module.css';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 
-export default function Header() {
+interface HeaderProps {
+    topCategories?: { title: { sv: string; en: string } }[];
+    solidHeader?: boolean;
+}
+
+export default function Header({ topCategories = [], solidHeader = false }: HeaderProps) {
     const { language, setLanguage, t } = useLanguage();
     const { theme, toggleTheme } = useTheme();
     const router = useRouter();
@@ -41,12 +46,12 @@ export default function Header() {
     };
 
     return (
-        <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+        <header className={`${styles.header} ${(isScrolled || solidHeader) ? styles.scrolled : ''}`}>
             <div className={`container ${styles.headerContainer}`}>
                 {/* Logo/Masthead */}
                 <Link href="/" className={styles.masthead}>
                     <Image
-                        src="/logo-white.png"
+                        src={(theme === 'light' && (isScrolled || solidHeader)) ? '/logo-black.png' : '/logo-white.png'}
                         alt="Dagsaktuellt"
                         width={120}
                         height={25}
@@ -60,6 +65,14 @@ export default function Header() {
                     <Link href="/articles">{t('allArticles')}</Link>
                     <Link href="/about">{t('about')}</Link>
                     <Link href="/articles">{t('recent')}</Link>
+                    {topCategories.map((cat, index) => (
+                        <Link
+                            key={index}
+                            href={`/articles?category=${encodeURIComponent(cat.title[language] || cat.title.en)}`}
+                        >
+                            {cat.title[language] || cat.title.en}
+                        </Link>
+                    ))}
                 </nav>
 
                 {/* Search and Toggles */}

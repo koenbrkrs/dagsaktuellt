@@ -23,5 +23,11 @@ export default defineType({
                 hotspot: true,
             },
         }),
+        defineField({
+            name: 'displayInHeader',
+            title: 'Display in Header',
+            type: 'boolean',
+            initialValue: false,
+        }),
     ],
 })

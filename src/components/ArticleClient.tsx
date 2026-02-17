@@ -21,7 +21,13 @@ interface ArticleClientProps {
         };
         category: { sv: string; en: string };
         body: { sv: any[]; en: any[] };
+        excerpt: { sv: string; en: string };
     };
+    topCategories?: { title: { sv: string; en: string } }[];
+    siteSettings?: any;
+    topAuthors?: any;
+    footerCategories?: { title: { sv: string; en: string } }[];
+    footerAuthors?: { name: string }[];
 }
 
 const components: PortableTextComponents = {
@@ -52,7 +58,7 @@ const components: PortableTextComponents = {
     },
 };
 
-export default function ArticleClient({ post }: ArticleClientProps) {
+export default function ArticleClient({ post, topCategories, siteSettings, topAuthors, footerCategories, footerAuthors }: ArticleClientProps) {
     const { language, t } = useLanguage();
 
     const heroImageUrl = post.mainImage
@@ -68,6 +74,7 @@ export default function ArticleClient({ post }: ArticleClientProps) {
     const category = post.category?.[language] || post.category?.en || '';
     const body = post.body?.[language] || post.body?.en || [];
     const jobTitle = post.author?.jobTitle?.[language] || post.author?.jobTitle?.en || '';
+    const excerpt = post.excerpt?.[language] || post.excerpt?.en || '';
 
     // Date formatting
     const formattedDate = new Date(post.publishedAt).toLocaleDateString(language === 'sv' ? 'sv-SE' : 'en-US', {
@@ -78,17 +85,17 @@ export default function ArticleClient({ post }: ArticleClientProps) {
 
     return (
         <>
-            <Header />
+            <Header topCategories={topCategories} />
             <article className={styles.articleContainer}>
                 {/* Hero Section */}
-                <div
-                    className={styles.hero}
-                    style={{
-                        backgroundImage: heroImageUrl ? `url(${heroImageUrl})` : 'none',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                >
+                <div className={styles.hero}>
+                    {heroImageUrl && (
+                        <img
+                            src={heroImageUrl}
+                            alt={title}
+                            className={styles.heroImage}
+                        />
+                    )}
                     <div className={styles.content}>
                         <div className={styles.categories}>
                             {category && (
@@ -99,6 +106,7 @@ export default function ArticleClient({ post }: ArticleClientProps) {
                             </span>
                         </div>
                         <h1 className={styles.headline}>{title}</h1>
+                        {excerpt && <p className={styles.excerpt}>{excerpt}</p>}
                     </div>
                 </div>
 
@@ -141,7 +149,7 @@ export default function ArticleClient({ post }: ArticleClientProps) {
                     <PortableText value={body} components={components} />
                 </div>
             </article>
-            <Footer />
+            <Footer topCategories={footerCategories} topAuthors={footerAuthors} />
         </>
     );
 }
